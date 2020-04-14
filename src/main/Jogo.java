@@ -27,11 +27,15 @@ public class Jogo{
     public int posxOcupadaComputador;
     public int posyOcupadaComputador;
     public int turno;
-    public int jogadaAtualx;
-    public int jogadaAtualy;
     public ArrayList<Integer> jogadax = new ArrayList();
     public ArrayList<Integer> jogaday = new ArrayList();
-    
+    public ArrayList<Integer> diagonal = new ArrayList();
+    int xLinha1 =0;
+    int xLinha2 =0;
+    int xLinha3 =0;
+    int yColuna1 =0;
+    int yColuna2 =0;
+    int yColuna3 =0;
             
     public Jogo(){        
     }
@@ -116,7 +120,7 @@ public class Jogo{
         return foraLimiteComputador = false;
     }
     
-    public boolean verificarTabuleiroComputador (int posx, int posy){
+        public boolean verificarTabuleiroComputador (int posx, int posy){
         if (tabuleiro[posx][posy] == 'X' || tabuleiro[posx][posy] == 'O'){
             tabuleiroOcupadoComputador = true;
         } else if (tabuleiro[posx][posy] == ' '){
@@ -125,6 +129,49 @@ public class Jogo{
         
         while (tabuleiroOcupadoComputador == true){
             posxComputador = numAleatorio.nextInt(3);
+            posyComputador = numAleatorio.nextInt(3);
+            
+                if (tabuleiro[posxComputador][posyComputador] == 'X' || tabuleiro[posxComputador][posyComputador] == 'O'){
+                tabuleiroOcupadoComputador = true;
+                } else if (tabuleiro[posxComputador][posyComputador] == ' '){
+                tabuleiroOcupadoComputador = false;
+                } 
+        }
+        this.verificarPosicaoComputador[0] = posxComputador;
+        this.verificarPosicaoComputador[1] = posyComputador;
+        return tabuleiroOcupadoComputador = false;
+    }
+        
+    public boolean verificarTabuleiroComputadorX (int posx, int posy){
+        if (tabuleiro[posx][posy] == 'X' || tabuleiro[posx][posy] == 'O'){
+            tabuleiroOcupadoComputador = true;
+        } else if (tabuleiro[posx][posy] == ' '){
+                    tabuleiroOcupadoComputador = false;
+        } 
+        
+        while (tabuleiroOcupadoComputador == true){
+            posxComputador = numAleatorio.nextInt(3);
+            posyComputador = posy;
+            
+                if (tabuleiro[posxComputador][posyComputador] == 'X' || tabuleiro[posxComputador][posyComputador] == 'O'){
+                tabuleiroOcupadoComputador = true;
+                } else if (tabuleiro[posxComputador][posyComputador] == ' '){
+                tabuleiroOcupadoComputador = false;
+                } 
+        }
+        this.verificarPosicaoComputador[0] = posxComputador;
+        this.verificarPosicaoComputador[1] = posyComputador;
+        return tabuleiroOcupadoComputador = false;
+    } 
+    public boolean verificarTabuleiroComputadorY (int posx, int posy){
+        if (tabuleiro[posx][posy] == 'X' || tabuleiro[posx][posy] == 'O'){
+            tabuleiroOcupadoComputador = true;
+        } else if (tabuleiro[posx][posy] == ' '){
+                    tabuleiroOcupadoComputador = false;
+        } 
+        
+        while (tabuleiroOcupadoComputador == true){
+            posxComputador = posx;
             posyComputador = numAleatorio.nextInt(3);
             
             verificarLimiteComputador(posxComputador, posyComputador);
@@ -228,10 +275,10 @@ public class Jogo{
                     posy = verificarPosicao[1];
                     
                     jogadax.add(posx);
-                    jogadaAtualx = posx;
-                    
                     jogaday.add(posy);
-                    jogadaAtualy = posy;
+                    if (posx == posy){
+                        diagonal.add(posx);
+                    }
                     
                 if (foraLimite == false && tabuleiroOcupado == false){
                     System.out.println();
@@ -256,7 +303,7 @@ public class Jogo{
                 
                 if (ganhou == true){
                     break;
-                }else if  (turno > 8){
+                }else if  (turno > 9){
                     System.out.println( "O jogo terminou EMPATADO, ninguém ganhou!");
                 }
                 }else if (vezComputador == true) {
@@ -265,7 +312,7 @@ public class Jogo{
                     ganhou = verificarGanhador();
                 if (ganhou == true){
                     break;
-                }else if  (turno > 8){
+                }else if  (turno > 9){
                     System.out.println( "O jogo terminou EMPATADO, ninguém ganhou!");
                     ganhou = true;
                 }
@@ -277,42 +324,147 @@ public class Jogo{
     public boolean jogadaComputador(){
         while (ganhou == false || vezComputador == true){
             
-            int turnoAnterior;
-            int jogadaAnteriorx;
-            int jogadaAnteriory;
+        if (xLinha1 < 2){
+            xLinha1 = 0;
+            if (xLinha2 < 2){
+                xLinha2 = 0;
+                if (xLinha3 < 2){
+                    xLinha3 = 0;
+                    if (yColuna1 < 2){
+                        yColuna1 = 0;
+                        if (yColuna2 < 2){
+                            yColuna2 = 0;
+                            if (yColuna3 < 2){
+                                yColuna3 = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        System.out.println("Antes do switch case");
+        System.out.println("Quantas vezes foi jogado na linha 1: " + xLinha1);
+        System.out.println("Quantas vezes foi jogado na linha 2: " + xLinha2);
+        System.out.println("Quantas vezes foi jogado na linha 3: " + xLinha3);
+        System.out.println("Quantas vezes foi jogado na coluna 1: " + yColuna1);
+        System.out.println("Quantas vezes foi jogado na coluna 2: " + yColuna2);
+        System.out.println("Quantas vezes foi jogado na coluna 3: " + yColuna3);
+        
+        
+            for (Integer listax : jogadax){
+                System.out.println(listax);
+                switch (listax){
+                    case 0:
+                        xLinha1++;
+                        break;
+                        
+                    case 1:
+                        xLinha2++;
+                        break;
+                        
+                    case 2:
+                        xLinha3++;
+                        break;
+                }
+            }
+
+ 
+            for (Integer listay : jogaday){
+                System.out.println(listay);
+                switch (listay){
+                    case 0:
+                        yColuna1++;
+                        break;
+                        
+                    case 1:
+                        yColuna2++;
+                        break;
+                        
+                    case 2:
+                        yColuna3++;
+                        break;
+                }
+            }
             
-            if (turno == 2){
-              turnoAnterior = 0;
-            }else {
-             turnoAnterior = ((turno/2)-2);
-             jogadaAnteriorx = jogadax.get(turnoAnterior);
-             jogadaAnteriory = jogaday.get(turnoAnterior);
-            
-            if (jogadaAnteriorx == jogadaAtualx){
-                posxComputador = jogadaAnteriorx;
-                posyComputador = numAleatorio.nextInt(3);
-            
-            } else if (jogadaAnteriory == jogadaAtualy){
-                posxComputador = numAleatorio.nextInt(3);
-                posyComputador = jogadaAnteriory;
-            
-            } else if (jogadaAnteriory == jogadaAnteriorx && jogadaAtualx == jogadaAtualy ){
+            if (diagonal.size() == 2){
                 posxComputador = numAleatorio.nextInt(3);
                 posyComputador = posxComputador;
+                
+                verificarTabuleiroComputador(posxComputador, posyComputador);
+            
+            } else if (xLinha1 == 2){
+                posxComputador = 0;
+                posyComputador = numAleatorio.nextInt(3);
+                
+                xLinha1 = 3;
+                
+                verificarTabuleiroComputadorY(posxComputador, posyComputador);
+                
+            } else if(xLinha2 == 2){
+                posxComputador = 1;
+                posyComputador = numAleatorio.nextInt(3);
+                
+                xLinha2 = 3;
+
+                
+                verificarTabuleiroComputadorY(posxComputador, posyComputador);
+                
+            } else if(xLinha3 == 2){
+                posxComputador = 2;
+                posyComputador = numAleatorio.nextInt(3);
+                
+                xLinha3 = 3;
+                
+                verificarTabuleiroComputadorY(posxComputador, posyComputador);
+                
+            } else if(yColuna1 == 2){
+                posxComputador = numAleatorio.nextInt(3);
+                posyComputador = 0;
+                
+                 yColuna1 = 3;
+               
+                verificarTabuleiroComputadorX(posxComputador, posyComputador);
+            
+            } else if(yColuna2 == 2){
+                posxComputador = numAleatorio.nextInt(3);
+                posyComputador = 1;
+                
+                yColuna2 = 3;
+                
+                verificarTabuleiroComputadorX(posxComputador, posyComputador);
+                
+            } else if(yColuna3 == 2){
+                posxComputador = numAleatorio.nextInt(3);
+                posyComputador = 2;
+                
+                yColuna3 = 3;
+                
+                verificarTabuleiroComputadorX(posxComputador, posyComputador);
+                
             } else {
                 posxComputador = numAleatorio.nextInt(3);
                 posyComputador = numAleatorio.nextInt(3);
-            }
-            }
-        
-            verificarLimiteComputador (posxComputador, posyComputador);
+                
+                verificarTabuleiroComputador (posxComputador, posyComputador);
                 posxComputador = verificarPosicaoComputador[0];
                 posyComputador = verificarPosicaoComputador[1];
-                
-            verificarTabuleiroComputador (posxComputador, posyComputador);
+            }
+                foraLimite = false;
                 posxComputador = verificarPosicaoComputador[0];
                 posyComputador = verificarPosicaoComputador[1];    
             
+        System.out.println("Depois do ifelse");
+        System.out.println("Quantas vezes foi jogado na linha 1: " + xLinha1);
+        System.out.println("Quantas vezes foi jogado na linha 2: " + xLinha2);
+        System.out.println("Quantas vezes foi jogado na linha 3: " + xLinha3);
+        System.out.println("Quantas vezes foi jogado na coluna 1: " + yColuna1);
+        System.out.println("Quantas vezes foi jogado na coluna 2: " + yColuna2);
+        System.out.println("Quantas vezes foi jogado na coluna 3: " + yColuna3);
+        System.out.println();
+        System.out.println("posx " + posxComputador);
+        System.out.println("posy " + posyComputador);
+        
                 if (foraLimiteComputador == false && tabuleiroOcupadoComputador == false){
                     System.out.println();
                     System.out.println();
